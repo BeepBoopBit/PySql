@@ -26,8 +26,16 @@ class PySql:
     
     def getDatabaseList(self):
         self.__safeExecution(f"SHOW DATABASES;", "Getting Database List")
-        return self.cursor.fetchall();
-        
+        return self.cursor.fetchall()
+    
+    ########## Table Stuff ##########
+    def createTable(self, tableName, command):
+        if self.currentDatabase == "":
+            print("No Database Currently in-use");
+            exit(-1);
+        else:
+            self.__safeExecution(f"CREATE TABLE {tableName} ({command});", "Creating Table")
+    
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
