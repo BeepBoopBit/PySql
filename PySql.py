@@ -12,18 +12,23 @@ class PySql:
             print("Invalid Credentials")
             exit(-1)
     
-    
     ########## Database Stuffs ##########
     def useDatabase(self, databaseName):
-        self.__safeExecution(f"USE {databaseName}", "Database Using")
+        self.__safeExecution(f"USE {databaseName};", "Using Database")
 
     def createDatabase(self, databaseName):
-        self.__safeExecution(f"CREATE DATABASE{databaseName}", "Database Creation")
+        self.__safeExecution(f"CREATE DATABASE{databaseName};", "Database Creation")
 
-        
+    def deleteDatabase(self, databaseName):
+        self.__safeExecution(f"DROP DATABASE {databaseName};", "Database Deletion")
+    
+    
+    ########## Private Methods ##########
+    
     def __safeExecution(self, command, typeOfCommand="Unknown"):
         try:
             self.cursor.execute(command)
         except:
             print(f"Problem: {typeOfCommand}");
             exit(-1)
+            
