@@ -16,4 +16,10 @@ class MySQLAPI:
         except:
             print("Can't find the Database Name");
             exit(-1)
-    
+
+    def createDatabase(self, databaseName):
+        try:
+            self.cursor.execute(f"CREATE database {databaseName}")
+        except:
+            print("Problem when creating your database. There might be a database with the same name exists");
+            exit(-1)
