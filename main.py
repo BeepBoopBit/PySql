@@ -8,3 +8,12 @@ class MySQLAPI:
         )
         self.cursor = self.db.cursor;
     
+    
+    ########## Database Stuffs ##########
+    def useDatabase(self, databaseName):
+        try:
+            self.cursor.execute(f"USE {databaseName}");
+        except:
+            print("Can't find the Database Name");
+            exit(-1)
+    
