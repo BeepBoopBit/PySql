@@ -15,7 +15,7 @@ class PySql:
     
     ########## Database Stuffs ##########
     def useDatabase(self, databaseName):
-        self.__safeExecution(f"USE {databaseName}", "Using Database")
+        self.__safeExecution(f"USE {databaseName}", "Database Using")
 
     def createDatabase(self, databaseName):
         self.__safeExecution(f"CREATE DATABASE{databaseName}", "Database Creation")
@@ -25,5 +25,5 @@ class PySql:
         try:
             self.cursor.execute(command)
         except:
-            print(f"Problem doing {typeOfCommand}");
+            print(f"Problem: {typeOfCommand}");
             exit(-1)
