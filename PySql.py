@@ -22,6 +22,10 @@ class PySql:
     def deleteDatabase(self, databaseName):
         self.__safeExecution(f"DROP DATABASE {databaseName};", "Database Deletion")
     
+    def getDatabaseList(self):
+        self.__safeExecution(f"SHOW DATABASES;", "Getting Database List")
+        return self.cursor.fetchall();
+        
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
