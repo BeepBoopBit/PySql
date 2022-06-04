@@ -46,7 +46,10 @@ class PySql:
     def getTables(self):
         self.__safeExecution("SHOW TABLES;", "Getting Tables")
         return self.cursor.fetchall()
-
+    
+    def deleteTable(self, tableName):
+        self.__safeExecution(f"DROP TABLE {tableName}", "Deleting Table")
+    
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
