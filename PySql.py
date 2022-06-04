@@ -50,6 +50,19 @@ class PySql:
     def deleteTable(self, tableName):
         self.__safeExecution(f"DROP TABLE {tableName}", "Deleting Table")
     
+    def addTableColumn(self, tableName, command):
+        tempStr = ""
+        if(isinstance(command, set) or isinstance(command, list)):
+            for data in command:
+                tempStr += data + ',';
+            tempStr = tempStr[:-1];
+        else:
+            tempStr = command;
+        if self.currentDatabase == "":
+            print("No Database Currently in-use");
+            exit(-1);
+        else:
+            self.__safeExecution(f"ALTER TABLE {tableName} ADD {command};", "Adding Table Column")
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
