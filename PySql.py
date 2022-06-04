@@ -30,11 +30,18 @@ class PySql:
     
     ########## Table Stuff ##########
     def createTable(self, tableName, command):
+        tempStr = ""
+        if(isinstance(command, set) or isinstance(command, list)):
+            for data in command:
+                tempStr += data + ',';
+            tempStr = tempStr[:-1];
+        else:
+            tempStr = command;
         if self.currentDatabase == "":
             print("No Database Currently in-use");
             exit(-1);
         else:
-            self.__safeExecution(f"CREATE TABLE {tableName} ({command});", "Creating Table")
+            self.__safeExecution(f"CREATE TABLE {tableName} ({tempStr});", "Creating Table")
     
     ########## Other Methods ##########
     def getCurrentUser(self):
