@@ -43,6 +43,10 @@ class PySql:
         else:
             self.__safeExecution(f"CREATE TABLE {tableName} ({tempStr});", "Creating Table")
     
+    def getTables(self):
+        self.__safeExecution("SHOW TABLES;", "Getting Tables")
+        return self.cursor.fetchall()
+
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
