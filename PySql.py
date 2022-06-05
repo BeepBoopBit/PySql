@@ -79,6 +79,11 @@ class PySql:
         self.__safeExecution(f"SELECT * FROM {tableName}", "Getting Table Data")
         return self.cursor.fetchall();
     
+    def getTableData(self, tableName, columnName, value, operator = "="):
+        self.__safeExecution(f"SELECT * FROM {tableName} WHERE {columnName} {operator} {value}", "Getting Table Data")
+        return self.cursor.fetchall();
+        
+    
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
