@@ -29,6 +29,10 @@ class PySql:
         return self.cursor.fetchall()
     
     ########## Table Stuff ##########
+    
+    # Command parameter can accept a set of list in a form of
+    #   - {"columnName Type CONSTRAINTS","CONSTRAINTS"}
+    
     def createTable(self, tableName, command):
         tempStr = ""
         if(isinstance(command, set) or isinstance(command, list)):
@@ -65,8 +69,16 @@ class PySql:
             self.__safeExecution(f"ALTER TABLE {tableName} ADD {command};", "Adding Table Column")
     
     def deleteTableColumn(self, tableName, columnName):
-        self.__safeExecution(f"ALTER TABLE {tableName} DROP COLUMN {columnName};")
+        self.__safeExecution(f"ALTER TABLE {tableName} DROP COLUMN {columnName};", "Deleting a Table")
         
+    ########## Selecting ##########
+    
+    # Returns a list of tuples
+    
+    def getTableData(self, tableName):
+        self.__safeExecution(f"SELECT * FROM {tableName}", "Getting Table Data")
+        return self.cursor.fetchall();
+    
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
