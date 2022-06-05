@@ -93,6 +93,9 @@ class PySql:
     def getCurrentDatabaseName(self):
         return self.currentDatabase;
     
+    def exportToCSV(self, tableName, fileName):
+        self.__safeExecution(f"SELECT * FROM {tableName} INTO OUTFILE '{fileName}.csv' FIELDS TERMINATED BY ','", "Exporting to CSV")
+    
     ########## Private Methods ##########
     
     def __safeExecution(self, command, typeOfCommand="Unknown"):
