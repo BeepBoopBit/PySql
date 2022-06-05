@@ -63,6 +63,10 @@ class PySql:
             exit(-1);
         else:
             self.__safeExecution(f"ALTER TABLE {tableName} ADD {command};", "Adding Table Column")
+    
+    def deleteTableColumn(self, tableName, columnName):
+        self.__safeExecution(f"ALTER TABLE {tableName} DROP COLUMN {columnName};")
+        
     ########## Other Methods ##########
     def getCurrentUser(self):
         """Return a List of Tuples"""
