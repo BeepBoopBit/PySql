@@ -1,4 +1,5 @@
 import mysql.connector
+from API.GoogleSheet import *
 class PySql:
     def __init__(self, username, userPassword):
         try:
@@ -12,6 +13,7 @@ class PySql:
             print("Invalid Credentials")
             exit(-1)
         self.currentDatabase = "";
+        self.gSheetAPI = GoogleSheetAPI();
     
     ########## Database Stuffs ##########
     def useDatabase(self, databaseName):
@@ -95,6 +97,13 @@ class PySql:
     
     def exportToCSV(self, tableName, fileName):
         self.__safeExecution(f"SELECT * FROM {tableName} INTO OUTFILE '{fileName}.csv' FIELDS TERMINATED BY ','", "Exporting to CSV")
+    
+    ########## API ##########
+    
+    def exportToGoogleSheet(self, tableName):
+        tableValue = self.getTableData(tableName);
+        # API STUFF
+        pass
     
     ########## Private Methods ##########
     
