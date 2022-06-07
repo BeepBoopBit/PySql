@@ -1,3 +1,4 @@
+from lib2to3.pytree import convert
 import mysql.connector
 from API.GoogleSheet import *
 from os.path import exists
@@ -111,13 +112,17 @@ class PySql:
     ########## API ##########
     
     def exportToGoogleSheet(self, tableName):
-        tableValue = self.getTableData(tableName);
+        tableValue = self.__convertTuplesToList(self.getTableData(tableName));
         # API STUFF
         pass
     
     ########## Private Methods ##########
 
-    def __convertToList(path):
+    def __convertTuplesToList(self, tupleValue):
+        # Finish the Function
+        pass
+
+    def __convertToList(self, path):
         if (not exists(path)):
             raise Exception("[ ! ] File does not exist")
 
