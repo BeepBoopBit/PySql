@@ -1,7 +1,5 @@
-from lib2to3.pytree import convert
 import mysql.connector
 from API.GoogleSheet import *
-from os.path import exists
 
 
 class PySql:
@@ -17,7 +15,7 @@ class PySql:
             print("Invalid Credentials")
             exit(-1)
         self.currentDatabase = "";
-        #self.gSheetAPI = GoogleSheetAPI();
+        self.gSheetAPI = None;
     
     ########## Database Stuffs ##########
     def useDatabase(self, databaseName):
@@ -86,9 +84,8 @@ class PySql:
 
     # Returns a list of tuples
 
-    def getTableData(self, tableName):
-        self.__safeExecution(
-            f"SELECT * FROM {tableName}", "Getting Table Data")
+    def getAllTableData(self, tableName):
+        self.__safeExecution(f"SELECT * FROM {tableName}", "Getting Table Data")
         return self.cursor.fetchall()
 
     def getTableData(self, tableName, columnName, value, operator="="):
@@ -111,12 +108,23 @@ class PySql:
     
     ########## API ##########
     
-    def exportToGoogleSheet(self, tableName):
-        tableValue = self.__convertTuplesToList(self.getTableData(tableName));
+    def initGoogleSheet(self, SCOPE, TOKEN_PATH):
+        self.gSheetAPI = GoogleSheetAPI(SCOPE, TOKEN_PATH);
+    
+    def exportToGoogleSheet(self, tableName, RANGE_VALUE, SHEET_ID):
+        tableValue = self.__tupleToListOfList(self.getAllTableData(tableName))
+        values = [
+            ["water", "melon"],
+            ["asdfadsf", "aasdkfjsdfk"]
+        ]
+        
         # API STUFF
+        self.gSheetAPI.updateSpreadsheetData(RANGE_VALUE,SHEET_ID, tableValue);
         pass
     
     ########## Private Methods ##########
+
+
 
     def __safeExecution(self, command, typeOfCommand="Unknown"):
         try:

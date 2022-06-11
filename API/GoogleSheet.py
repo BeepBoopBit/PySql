@@ -1,6 +1,5 @@
 from __future__ import print_function
 from google.oauth2 import service_account
-from PySql import PySql
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -10,7 +9,7 @@ from googleapiclient.errors import HttpError
 import os.path
 
 
-class GoogleSheetAPI(PySql):
+class GoogleSheetAPI:
     def __init__(self, SCOPES, TOKEN_PATH):
         """
         Initializes API Object\n\n
