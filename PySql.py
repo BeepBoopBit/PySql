@@ -113,11 +113,6 @@ class PySql:
     
     def exportToGoogleSheet(self, tableName, RANGE_VALUE, SHEET_ID):
         tableValue = self.__tupleToListOfList(self.getAllTableData(tableName))
-        values = [
-            ["water", "melon"],
-            ["asdfadsf", "aasdkfjsdfk"]
-        ]
-        
         # API STUFF
         self.gSheetAPI.updateSpreadsheetData(RANGE_VALUE,SHEET_ID, tableValue);
         pass
@@ -130,7 +125,8 @@ class PySql:
             tempListValue = list(row);
             dateTimeObject = tempListValue[4];
             tempListValue[4] = dateTimeObject.strftime("%d-%b-%Y");
-            tempList.append(list(row));
+            tempList.append(tempListValue);
+        return tempList;
 
     def __safeExecution(self, command, typeOfCommand="Unknown"):
         try:
