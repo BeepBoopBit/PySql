@@ -1,7 +1,13 @@
 from __future__ import print_function
-from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from PySql import PySql
+
+from google.auth.transport.requests import Request
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+import os.path
 
 
 class GoogleSheetAPI(PySql):
@@ -13,11 +19,20 @@ class GoogleSheetAPI(PySql):
 
         self.SERVICE_ACCOUNT_FILE = TOKEN_PATH
 
-        credentials = None
-        credentials = service_account.Credentials.from_service_account_file(
-            self.SERVICE_ACCOUNT_FILE, scopes=SCOPES)
-
-        self.service = build('sheets', 'v4', credentials=credentials)
+        creds = None
+        
+        if os.path.exists(TOKEN_PATH):
+            creds = Credentials.from_authorized_user_file(TOKEN_PATH, SCOPES)
+        if not creds or not creds.valid:
+            if creds and creds.expired and creds.refresh_token:
+                creds.refresh(Request())
+            else:
+                flow = InstalledAppFlow.from_client_secrets_file(
+                    'credentials.json', SCOPES)
+                creds = flow.run_local_server(port=0)
+            with open(TOKEN_PATH, 'w') as token:
+                token.write(creds.to_json())
+        self.service = build('sheets', 'v4', credentials=creds)
         pass
 
     def getSpreadsheetData(self, RANGE_INPUT, SPREADSHEET_ID):

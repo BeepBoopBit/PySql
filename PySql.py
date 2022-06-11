@@ -17,7 +17,7 @@ class PySql:
             print("Invalid Credentials")
             exit(-1)
         self.currentDatabase = "";
-        self.gSheetAPI = GoogleSheetAPI();
+        #self.gSheetAPI = GoogleSheetAPI();
     
     ########## Database Stuffs ##########
     def useDatabase(self, databaseName):
@@ -26,7 +26,7 @@ class PySql:
 
     def createDatabase(self, databaseName):
         self.__safeExecution(
-            f"CREATE DATABASE{databaseName};", "Database Creation")
+            f"CREATE DATABASE {databaseName};", "Database Creation")
 
     def deleteDatabase(self, databaseName):
         self.__safeExecution(
