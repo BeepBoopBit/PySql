@@ -118,28 +118,6 @@ class PySql:
     
     ########## Private Methods ##########
 
-    def __convertTuplesToList(self, tupleValue):
-        # Finish the Function
-        pass
-
-    def __convertToList(self, path):
-        if (not exists(path)):
-            raise Exception("[ ! ] File does not exist")
-
-        if (not path.endswith(".txt")):
-            raise Exception("[ ! ] Specified path is not a txt file.")
-
-        file = open(path)
-        csv = file.read()
-        lines = csv.split('\n')
-        rows = []
-
-        for line in lines:
-            items = line.split(',')
-            rows.append(items)
-
-        return rows
-
     def __safeExecution(self, command, typeOfCommand="Unknown"):
         try:
             self.cursor.execute(command)
