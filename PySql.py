@@ -124,7 +124,13 @@ class PySql:
     
     ########## Private Methods ##########
 
-
+    def __tupleToListOfList(self, value):
+        tempList = [];
+        for row in value:
+            tempListValue = list(row);
+            dateTimeObject = tempListValue[4];
+            tempListValue[4] = dateTimeObject.strftime("%d-%b-%Y");
+            tempList.append(list(row));
 
     def __safeExecution(self, command, typeOfCommand="Unknown"):
         try:
