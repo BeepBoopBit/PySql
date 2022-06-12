@@ -34,6 +34,12 @@ class GoogleSheetAPI:
         self.service = build('sheets', 'v4', credentials=creds)
         pass
 
+    def clearSpreadsheet(self, SPREADSHEET_ID, RANGE_INPUT):
+        sheet = self.service.spreadsheets()
+        result = sheet.values().clear(spreadsheetId=SPREADSHEET_ID,
+                                      range=RANGE_INPUT).execute()
+        return result
+
     def getSpreadsheetData(self, RANGE_INPUT, SPREADSHEET_ID):
         """
         Returns a dictionary of the spreadsheet.\n\n
