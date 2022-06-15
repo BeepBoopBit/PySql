@@ -24,5 +24,16 @@ class GoogleDocstAPI:
                 with open(TOKEN_PATH, 'w') as token:
                     token.write(creds.to_json());
         self.service = build('docs', 'v1', credentials=creds)
+        
 
+    def insertData(self, DATA, DOCUMENT_ID):
+        try:
+            result = self.service.documents().batchUpdate(
+                documentId=DOCUMENT_ID,
+                body= {
+                    'requests' : DATA
+                }
+            ).execute();
+        except HttpError as err:
+            print(err);
     
